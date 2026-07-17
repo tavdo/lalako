@@ -3,6 +3,9 @@
 -- Run this in the Supabase SQL editor (Dashboard → SQL Editor).
 -- =============================================================
 
+-- Required for gen_random_uuid() in register_player RPC
+create extension if not exists pgcrypto with schema extensions;
+
 -- 1) Tournament table: a single row (id = 'main') holding all data as JSON.
 create table if not exists public.tournament (
   id text primary key,

@@ -38,7 +38,7 @@ begin
   end if;
 
   v_reg := jsonb_build_object(
-    'id', encode(gen_random_bytes(8), 'hex'),
+    'id', replace(gen_random_uuid()::text, '-', ''),
     'name', v_name,
     'tag', nullif(btrim(coalesce(p_tag, '')), ''),
     'avatar', p_avatar,
