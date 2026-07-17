@@ -4,8 +4,8 @@
   "description": "PUBG TDM 1v1 ტურნირის ბრეკეტი — Hosted by Lalako",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#07090d",
-  "theme_color": "#07090d",
+  "background_color": "#120810",
+  "theme_color": "#1a0d16",
   "icons": [
     {
       "src": "/icon.jpg",

@@ -5,13 +5,14 @@ import { Bracket } from '../components/Bracket';
 import { RegisterForm } from '../components/RegisterForm';
 import { MatchCard } from '../components/MatchCard';
 import logo from '../assets/logo.png';
+import badge from '../assets/badge.jpg';
 
 type Tab = 'bracket' | 'join' | 'history';
 
 function Skeleton() {
   return (
     <div className="px" style={{ display: 'grid', gap: 14, paddingTop: 20 }}>
-      <div className="skeleton" style={{ height: 180 }} />
+      <div className="skeleton" style={{ height: 200, borderRadius: '50%', width: 140, margin: '0 auto' }} />
       <div className="skeleton" style={{ height: 48, borderRadius: 999 }} />
       <div className="skeleton" style={{ height: 120 }} />
       <div className="skeleton" style={{ height: 120 }} />
@@ -51,30 +52,25 @@ export function PublicPage() {
 
   return (
     <div className="phone">
-      {/* hero */}
       <header
         style={{
-          padding: 'calc(18px + env(safe-area-inset-top)) 18px 22px',
+          padding: 'calc(20px + env(safe-area-inset-top)) 18px 26px',
           textAlign: 'center',
-          background:
-            'linear-gradient(180deg, rgba(34,211,238,0.07), transparent 80%)',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}>
-          <img
-            src={logo}
-            alt="LALAKO"
-            style={{ width: 210, filter: 'drop-shadow(0 10px 28px rgba(255,120,20,0.25))' }}
-          />
+        <img className="hero-badge" src={badge} alt="Lalako" />
+        <div>
+          <img className="hero-wordmark" src={logo} alt="LALAKO" />
         </div>
-        <h1 style={{ fontSize: 24, fontWeight: 900 }}>{t.name || 'LALAKO TDM CUP'}</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 700, marginTop: 10 }}>{t.name || 'LALAKO TDM CUP'}</h1>
         <div
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 11,
-            letterSpacing: '0.35em',
-            color: 'var(--cyan)',
-            margin: '8px 0 12px',
+            fontSize: 12,
+            letterSpacing: '0.22em',
+            color: 'var(--pink-soft)',
+            margin: '8px 0 14px',
+            fontWeight: 700,
           }}
         >
           TOURNAMENT BRACKET
@@ -117,8 +113,10 @@ export function PublicPage() {
             ⭐ MVP: {t.mvp}
           </div>
         )}
-        <div className="muted" style={{ fontSize: 12, marginTop: 12 }}>
-          Hosted by <b style={{ color: 'var(--gold)' }}>{t.owner || 'Lalako'}</b>
+        <div className="muted" style={{ fontSize: 13, marginTop: 14 }}>
+          Hosted by{' '}
+          <b style={{ color: 'var(--pink-soft)', fontWeight: 800 }}>{t.owner || 'Lalako'}</b>
+          <span style={{ marginLeft: 4 }}>💕</span>
         </div>
       </header>
 

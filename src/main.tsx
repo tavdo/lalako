@@ -4,10 +4,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import { PublicPage } from './pages/PublicPage';
 import { AdminPage } from './pages/AdminPage';
-import badge from './assets/badge.jpg';
+import lalako from './assets/lalako.png';
 
-// expose the Lalako art to CSS (.phone::before ambient background)
-document.documentElement.style.setProperty('--bg-art', `url(${badge})`);
+// Cute Lalako portrait as the visible app background
+document.documentElement.style.setProperty('--bg-art', `url(${lalako})`);
 
 const router = createBrowserRouter([
   { path: '/', element: <PublicPage /> },
