@@ -1,0 +1,444 @@
+:root {
+  --bg: #07090d;
+  --bg-2: #0c1017;
+  --card: rgba(255, 255, 255, 0.045);
+  --card-strong: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #eef2f7;
+  --muted: #8b94a3;
+  --cyan: #22d3ee;
+  --cyan-dim: rgba(34, 211, 238, 0.14);
+  --gold: #f5c343;
+  --gold-dim: rgba(245, 195, 67, 0.14);
+  --green: #34d399;
+  --red: #f87171;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --font-display: 'Orbitron', 'Noto Sans Georgian', sans-serif;
+  --font-body: 'Noto Sans Georgian', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #030405;
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---- phone frame: the app never expands to desktop ---- */
+.phone {
+  position: relative;
+  width: 100%;
+  max-width: 410px;
+  min-height: 100dvh;
+  background:
+    radial-gradient(120% 60% at 50% -5%, rgba(34, 211, 238, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 40%);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+  overflow-x: hidden;
+  padding-bottom: calc(88px + env(safe-area-inset-bottom));
+}
+
+.phone::before {
+  /* Lalako art as a faint ambient background */
+  content: '';
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  max-width: 410px;
+  background-image: var(--bg-art);
+  background-size: cover;
+  background-position: center 15%;
+  opacity: 0.07;
+  filter: saturate(0.7) blur(2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.phone > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- typography ---- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* ---- glass card ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ---- buttons / inputs: touch friendly ---- */
+button,
+.btn {
+  font-family: var(--font-body);
+  min-height: 44px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.15s ease, background 0.2s ease;
+  touch-action: manipulation;
+}
+
+button:active,
+.btn:active {
+  transform: scale(0.97);
+  filter: brightness(1.15);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #19b8d4, var(--cyan));
+  color: #04252c;
+  box-shadow: 0 6px 22px rgba(34, 211, 238, 0.28);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #d9a422, var(--gold));
+  color: #2b1f03;
+  box-shadow: 0 6px 22px rgba(245, 195, 67, 0.25);
+}
+
+.btn-ghost {
+  background: var(--card-strong);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+
+.btn-danger {
+  background: rgba(248, 113, 113, 0.14);
+  color: var(--red);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 16px; /* prevents iOS zoom */
+  min-height: 46px;
+  width: 100%;
+  padding: 10px 14px;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b94a3' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 6px 2px;
+}
+
+/* ---- status pills ---- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+.pill-pending {
+  background: rgba(139, 148, 163, 0.14);
+  color: var(--muted);
+}
+
+.pill-live {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+}
+
+.pill-done {
+  background: rgba(52, 211, 153, 0.14);
+  color: var(--green);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.dot-pulse {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 6px rgba(34, 211, 238, 0);
+  }
+}
+
+/* ---- skeleton ---- */
+.skeleton {
+  border-radius: var(--radius);
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.11) 50%,
+    rgba(255, 255, 255, 0.05) 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.3s infinite linear;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---- segmented control ---- */
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.segmented button {
+  min-height: 40px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0 6px;
+}
+
+.segmented button.active {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
+}
+
+.segmented button.active.gold {
+  background: var(--gold-dim);
+  color: var(--gold);
+  box-shadow: inset 0 0 0 1px rgba(245, 195, 67, 0.4);
+}
+
+/* ---- bottom nav ---- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 410px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: rgba(9, 12, 17, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--border);
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  z-index: 50;
+}
+
+.bottom-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-height: 52px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.bottom-nav button.active {
+  color: var(--cyan);
+}
+
+.bottom-nav .icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ---- avatar ---- */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(135deg, #1b2430, #10161f);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--muted);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- winner glow ---- */
+.winner-glow {
+  animation: winnerIn 0.5s ease;
+  box-shadow: 0 0 0 1px rgba(245, 195, 67, 0.45), 0 0 24px rgba(245, 195, 67, 0.18);
+}
+
+@keyframes winnerIn {
+  from {
+    transform: scale(0.96);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---- tab fade ---- */
+.fade-in {
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- confetti (grand final winner) ---- */
+.confetti {
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(360px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ---- misc helpers ---- */
+.px {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 3px solid rgba(34, 211, 238, 0.2);
+  border-top-color: var(--cyan);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 34px 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.empty-state .icon {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "LALAKO TDM CUP",
+  "short_name": "LALAKO CUP",
+  "description": "PUBG TDM 1v1 ტურნირის ბრეკეტი — Hosted by Lalako",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "icons": [
+    {
+      "src": "/icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
