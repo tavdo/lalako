@@ -1,6 +1,7 @@
 import type { Match, Player } from '../lib/types';
 import { Avatar } from './Avatar';
 import { StatusPill } from './StatusPill';
+import { IconCrown } from './Icons';
 
 function Row({
   player,
@@ -37,10 +38,15 @@ function Row({
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             color: winner ? 'var(--gold)' : player ? 'var(--text)' : 'var(--muted)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
           }}
         >
-          {player ? player.name : 'TBD'}
-          {winner && ' 👑'}
+          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {player ? player.name : 'TBD'}
+          </span>
+          {winner && <IconCrown size={14} style={{ color: 'var(--gold)', flexShrink: 0 }} />}
         </div>
         {player?.tag && (
           <div className="muted" style={{ fontSize: 11 }}>

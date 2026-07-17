@@ -3,6 +3,7 @@ import { registerPlayer } from '../lib/store';
 import { resizeAvatar } from '../lib/avatar';
 import type { Tournament } from '../lib/types';
 import { Avatar } from './Avatar';
+import { IconCheckCircle } from './Icons';
 
 export function RegisterForm({
   tournament,
@@ -62,7 +63,9 @@ export function RegisterForm({
   if (success) {
     return (
       <div className="card fade-in" style={{ padding: 26, textAlign: 'center' }}>
-        <div style={{ fontSize: 40 }}>✅</div>
+        <div style={{ color: 'var(--green)', display: 'flex', justifyContent: 'center' }}>
+          <IconCheckCircle size={42} />
+        </div>
         <h3 style={{ fontSize: 17, margin: '12px 0 8px' }}>დარეგისტრირდით!</h3>
         <p className="muted" style={{ fontSize: 14, margin: 0 }}>
           ადმინი გირჩევთ ბრეკეტში.

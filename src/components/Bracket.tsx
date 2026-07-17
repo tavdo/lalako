@@ -4,6 +4,7 @@ import { roundLabel, sideRounds, champion } from '../lib/bracket';
 import { MatchCard } from './MatchCard';
 import { Avatar } from './Avatar';
 import { Confetti } from './Confetti';
+import { IconTrophy } from './Icons';
 
 type Tab = 'left' | 'final' | 'right';
 
@@ -29,8 +30,9 @@ export function Bracket({ t }: { t: Tournament }) {
         <button
           className={tab === 'final' ? 'active gold' : ''}
           onClick={() => setTab('final')}
+          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
         >
-          🏆 ფინალი
+          <IconTrophy size={14} /> ფინალი
         </button>
         <button className={tab === 'right' ? 'active' : ''} onClick={() => setTab('right')}>
           მარჯვენა
@@ -68,8 +70,15 @@ export function Bracket({ t }: { t: Tournament }) {
         <div key="final" className="fade-in" style={{ position: 'relative' }}>
           {champ && <Confetti />}
           <div style={{ textAlign: 'center', margin: '6px 0 18px' }}>
-            <div style={{ fontSize: 44, filter: 'drop-shadow(0 0 18px rgba(245,195,67,0.5))' }}>
-              🏆
+            <div
+              style={{
+                color: 'var(--gold)',
+                filter: 'drop-shadow(0 0 18px rgba(255,211,106,0.55))',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <IconTrophy size={48} />
             </div>
             {champ ? (
               <div className="fade-in" style={{ marginTop: 10 }}>

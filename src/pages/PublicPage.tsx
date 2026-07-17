@@ -6,6 +6,16 @@ import { RegisterForm } from '../components/RegisterForm';
 import { MatchCard } from '../components/MatchCard';
 import logo from '../assets/logo.png';
 import badge from '../assets/badge.jpg';
+import {
+  IconCalendar,
+  IconUser,
+  IconStar,
+  IconHeart,
+  IconTarget,
+  IconHistory,
+  IconTrophy,
+  IconRegister,
+} from '../components/Icons';
 
 type Tab = 'bracket' | 'join' | 'history';
 
@@ -88,11 +98,11 @@ export function PublicPage() {
           </span>
           {t.date && (
             <span className="pill pill-pending" style={{ fontSize: 12 }}>
-              📅 {t.date}
+              <IconCalendar size={13} /> {t.date}
             </span>
           )}
           <span className="pill pill-pending" style={{ fontSize: 12 }}>
-            👤 {filledSeeds}/{t.playerCount}
+            <IconUser size={13} /> {filledSeeds}/{t.playerCount}
           </span>
           {remote && (
             <span className="pill pill-live" style={{ fontSize: 12 }}>
@@ -110,13 +120,13 @@ export function PublicPage() {
               fontSize: 12,
             }}
           >
-            ⭐ MVP: {t.mvp}
+            <IconStar size={13} /> MVP: {t.mvp}
           </div>
         )}
-        <div className="muted" style={{ fontSize: 13, marginTop: 14 }}>
+        <div className="muted" style={{ fontSize: 13, marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           Hosted by{' '}
           <b style={{ color: 'var(--pink-soft)', fontWeight: 800 }}>{t.owner || 'Lalako'}</b>
-          <span style={{ marginLeft: 4 }}>💕</span>
+          <IconHeart size={14} style={{ color: 'var(--pink)' }} />
         </div>
       </header>
 
@@ -142,7 +152,9 @@ export function PublicPage() {
         {tab === 'bracket' &&
           (filledSeeds === 0 ? (
             <div className="card empty-state">
-              <span className="icon">🎯</span>
+              <span className="icon">
+                <IconTarget size={32} />
+              </span>
               ბრეკეტი ჯერ ცარიელია — ადმინი მალე განათავსებს მოთამაშეებს.
             </div>
           ) : (
@@ -184,7 +196,9 @@ export function PublicPage() {
         {tab === 'history' &&
           (doneMatches.length === 0 ? (
             <div className="card empty-state">
-              <span className="icon">📜</span>
+              <span className="icon">
+                <IconHistory size={32} />
+              </span>
               დასრულებული მატჩები ჯერ არ არის.
             </div>
           ) : (
@@ -200,9 +214,18 @@ export function PublicPage() {
               {champId && players.get(champId) && (
                 <div
                   className="card winner-glow"
-                  style={{ padding: 16, textAlign: 'center', color: 'var(--gold)', fontWeight: 800 }}
+                  style={{
+                    padding: 16,
+                    textAlign: 'center',
+                    color: 'var(--gold)',
+                    fontWeight: 800,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                  }}
                 >
-                  🏆 ჩემპიონი: {players.get(champId)!.name}
+                  <IconTrophy size={20} /> ჩემპიონი: {players.get(champId)!.name}
                 </div>
               )}
             </div>
@@ -211,15 +234,21 @@ export function PublicPage() {
 
       <nav className="bottom-nav">
         <button className={tab === 'bracket' ? 'active' : ''} onClick={() => setTab('bracket')}>
-          <span className="icon">🏆</span>
+          <span className="icon">
+            <IconTrophy size={20} />
+          </span>
           ბრეკეტი
         </button>
         <button className={tab === 'join' ? 'active' : ''} onClick={() => setTab('join')}>
-          <span className="icon">📝</span>
+          <span className="icon">
+            <IconRegister size={20} />
+          </span>
           რეგისტრაცია
         </button>
         <button className={tab === 'history' ? 'active' : ''} onClick={() => setTab('history')}>
-          <span className="icon">📜</span>
+          <span className="icon">
+            <IconHistory size={20} />
+          </span>
           ისტორია
         </button>
       </nav>

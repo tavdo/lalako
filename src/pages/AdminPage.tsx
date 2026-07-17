@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type FormEvent } from 'react';
+import { useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { saveTournament, useTournament } from '../lib/store';
 import { defaultTournament, uid, type Match, type Player, type PlayerCount, type Tournament } from '../lib/types';
@@ -6,6 +6,22 @@ import { roundLabel, sideRounds, syncBracket } from '../lib/bracket';
 import { resizeAvatar } from '../lib/avatar';
 import { Avatar } from '../components/Avatar';
 import { StatusPill } from '../components/StatusPill';
+import {
+  IconSettings,
+  IconInbox,
+  IconUser,
+  IconTarget,
+  IconSwords,
+  IconCheck,
+  IconClose,
+  IconEdit,
+  IconTrash,
+  IconDice,
+  IconTrophy,
+  IconChevronUp,
+  IconChevronDown,
+  IconSite,
+} from '../components/Icons';
 import logo from '../assets/logo.png';
 
 const DEFAULT_PASSWORD = 'lalako2026!!';
@@ -14,12 +30,12 @@ const SESSION_KEY = 'lalako-admin-session';
 
 type Tab = 'settings' | 'registrations' | 'players' | 'seeding' | 'matches';
 
-const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: 'settings', label: 'პარამეტრები', icon: '⚙️' },
-  { id: 'registrations', label: 'რეგისტრაციები', icon: '📥' },
-  { id: 'players', label: 'მოთამაშეები', icon: '👤' },
-  { id: 'seeding', label: 'განაწილება', icon: '🎯' },
-  { id: 'matches', label: 'მატჩები', icon: '⚔️' },
+const TABS: { id: Tab; label: string; Icon: typeof IconSettings }[] = [
+  { id: 'settings', label: 'პარამეტრები', Icon: IconSettings },
+  { id: 'registrations', label: 'რეგისტრაციები', Icon: IconInbox },
+  { id: 'players', label: 'მოთამაშეები', Icon: IconUser },
+  { id: 'seeding', label: 'განაწილება', Icon: IconTarget },
+  { id: 'matches', label: 'მატჩები', Icon: IconSwords },
 ];
 
 function Login({ onAuth }: { onAuth: () => void }) {
@@ -99,7 +115,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
     toastTimer.current = window.setTimeout(() => setToast(null), 2600);
   };
 
-  const mutate = async (fn: (t: Tournament) => Tournament, message = 'შენახულია ✓') => {
+  const mutate = async (fn: (t: Tournament) => Tournament, message = 'შენახულია') => {
     if (!tournament) return;
     setSaving(true);
     try {
@@ -143,8 +159,8 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
             {saving ? 'ინახება…' : 'მზადაა'}
           </div>
         </div>
-        <Link to="/" className="btn btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', padding: '0 14px', textDecoration: 'none', fontSize: 13 }}>
-          საიტი
+        <Link to="/" className="btn btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '0 14px', textDecoration: 'none', fontSize: 13 }}>
+          <IconSite size={14} /> საიტი
         </Link>
         <button className="btn-ghost" style={{ padding: '0 14px', fontSize: 13 }} onClick={onLogout}>
           გასვლა
@@ -171,12 +187,15 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 fontSize: 13,
                 padding: '0 14px',
                 flexShrink: 0,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
                 background: tab === x.id ? 'var(--cyan-dim)' : 'var(--card-strong)',
                 color: tab === x.id ? 'var(--cyan)' : 'var(--text)',
-                border: `1px solid ${tab === x.id ? 'rgba(34,211,238,0.4)' : 'var(--border-strong)'}`,
+                border: `1px solid ${tab === x.id ? 'rgba(255,77,166,0.4)' : 'var(--border-strong)'}`,
               }}
             >
-              {x.icon} {x.label}
+              <x.Icon size={14} /> {x.label}
             </button>
           ))}
         </div>
@@ -327,7 +346,9 @@ function RegistrationsTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
   if (t.registrations.length === 0) {
     return (
       <div className="card empty-state">
-        <span className="icon">📥</span>
+        <span className="icon">
+          <IconInbox size={32} />
+        </span>
         ჯერ არავინ დარეგისტრირდა.
       </div>
     );
@@ -353,7 +374,7 @@ function RegistrationsTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
           </div>
           <button
             className="btn-primary"
-            style={{ padding: '0 14px', fontSize: 13 }}
+            style={{ padding: '0 14px', fontSize: 13, display: 'inline-flex', alignItems: 'center' }}
             onClick={() =>
               void mutate(
                 (cur) => ({
@@ -364,15 +385,15 @@ function RegistrationsTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
                   ],
                   registrations: cur.registrations.filter((x) => x.id !== r.id),
                 }),
-                'დამტკიცდა ✓',
+                'დამტკიცდა',
               )
             }
           >
-            ✓
+            <IconCheck size={16} />
           </button>
           <button
             className="btn-danger"
-            style={{ padding: '0 14px', fontSize: 13 }}
+            style={{ padding: '0 14px', fontSize: 13, display: 'inline-flex', alignItems: 'center' }}
             onClick={() =>
               void mutate(
                 (cur) => ({
@@ -383,7 +404,7 @@ function RegistrationsTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
               )
             }
           >
-            ✕
+            <IconClose size={16} />
           </button>
         </div>
       ))}
@@ -475,7 +496,9 @@ function PlayersTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
 
       {t.players.length === 0 ? (
         <div className="card empty-state">
-          <span className="icon">👤</span>
+          <span className="icon">
+            <IconUser size={32} />
+          </span>
           მოთამაშეები ჯერ არ არიან დამატებული.
         </div>
       ) : (
@@ -492,12 +515,16 @@ function PlayersTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
                   </span>
                 )}
               </div>
-              <button className="btn-ghost" style={{ padding: '0 12px', fontSize: 13 }} onClick={() => startEdit(p)}>
-                ✎
+              <button
+                className="btn-ghost"
+                style={{ padding: '0 12px', display: 'inline-flex', alignItems: 'center' }}
+                onClick={() => startEdit(p)}
+              >
+                <IconEdit size={16} />
               </button>
               <button
                 className="btn-danger"
-                style={{ padding: '0 12px', fontSize: 13 }}
+                style={{ padding: '0 12px', display: 'inline-flex', alignItems: 'center' }}
                 onClick={() =>
                   void mutate(
                     (cur) => ({
@@ -509,7 +536,7 @@ function PlayersTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
                   )
                 }
               >
-                🗑
+                <IconTrash size={16} />
               </button>
             </div>
           ))}
@@ -557,7 +584,9 @@ function SeedingTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
     <>
       {t.players.length === 0 && (
         <div className="card empty-state">
-          <span className="icon">🎯</span>
+          <span className="icon">
+            <IconTarget size={32} />
+          </span>
           ჯერ დაამატეთ მოთამაშეები „მოთამაშეების“ ტაბში.
         </div>
       )}
@@ -572,12 +601,13 @@ function SeedingTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
       <div className="field-grid">
         <button
           className="btn-primary"
-          onClick={() => void mutate((cur) => ({ ...cur, seeds }), 'განაწილება შენახულია ✓')}
+          onClick={() => void mutate((cur) => ({ ...cur, seeds }), 'განაწილება შენახულია')}
         >
           შენახვა
         </button>
         <button
           className="btn-ghost"
+          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
           onClick={() => {
             const shuffled = [...t.players].sort(() => Math.random() - 0.5);
             const next: (string | null)[] = Array(t.playerCount).fill(null);
@@ -585,7 +615,7 @@ function SeedingTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
             setSeeds(next);
           }}
         >
-          🎲 შემთხვევით
+          <IconDice size={16} /> შემთხვევით
         </button>
       </div>
     </>
@@ -599,26 +629,33 @@ function MatchesTab({ t, mutate }: { t: Tournament; mutate: MutateFn }) {
   const rounds = sideRounds(t.playerCount);
   const [open, setOpen] = useState<string | null>(null);
 
-  const sections: { title: string; matches: Match[] }[] = [];
+  const sections: { title: ReactNode; key: string; matches: Match[] }[] = [];
   for (let r = 1; r <= rounds; r++) {
     sections.push({
+      key: `L-${r}`,
       title: `${roundLabel(r, t.playerCount)} · მარცხენა`,
       matches: t.matches.filter((m) => m.side === 'left' && m.round === r),
     });
     sections.push({
+      key: `R-${r}`,
       title: `${roundLabel(r, t.playerCount)} · მარჯვენა`,
       matches: t.matches.filter((m) => m.side === 'right' && m.round === r),
     });
   }
   sections.push({
-    title: '🏆 ფინალი',
+    key: 'F',
+    title: (
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <IconTrophy size={13} /> ფინალი
+      </span>
+    ),
     matches: t.matches.filter((m) => m.side === 'final'),
   });
 
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       {sections.map((s) => (
-        <section key={s.title}>
+        <section key={s.key}>
           <h3 style={{ fontSize: 12, color: 'var(--cyan)', margin: '0 2px 8px', textTransform: 'uppercase' }}>
             {s.title}
           </h3>
@@ -709,7 +746,9 @@ function MatchEditor({
           {p1?.name ?? 'TBD'} <span className="muted">vs</span> {p2?.name ?? 'TBD'}
         </span>
         <StatusPill status={match.status} />
-        <span className="muted">{open ? '▴' : '▾'}</span>
+        <span className="muted" style={{ display: 'inline-flex' }}>
+          {open ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
+        </span>
       </button>
 
       {open && (
