@@ -466,6 +466,44 @@ label {
   gap: 6px;
 }
 
+/* ---- admin tabs horizontal scroll ---- */
+.tab-scroll {
+  position: relative;
+  margin: 0 -18px;
+  padding: 0 18px;
+}
+
+.tab-scroll-inner {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.tab-scroll-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-scroll-inner > button {
+  scroll-snap-align: start;
+}
+
+/* subtle fade hint that more tabs exist to the right/left */
+.tab-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 26px;
+  background: linear-gradient(90deg, transparent, rgba(14, 6, 11, 0.9));
+  pointer-events: none;
+  border-radius: 0 12px 12px 0;
+}
+
 /* hero portrait / badge */
 .hero-badge {
   width: 132px;

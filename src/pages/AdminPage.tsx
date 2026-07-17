@@ -168,15 +168,8 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
       </header>
 
       <div className="px" style={{ marginBottom: 14 }}>
-        <div
-          style={{
-            display: 'flex',
-            gap: 6,
-            overflowX: 'auto',
-            paddingBottom: 4,
-            WebkitOverflowScrolling: 'touch',
-          }}
-        >
+        <div className="tab-scroll">
+          <div className="tab-scroll-inner">
           {TABS.map((x) => (
             <button
               key={x.id}
@@ -198,6 +191,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
               <x.Icon size={14} /> {x.label}
             </button>
           ))}
+          </div>
         </div>
       </div>
 
